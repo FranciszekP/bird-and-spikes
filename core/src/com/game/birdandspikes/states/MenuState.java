@@ -15,7 +15,7 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        cam.setToOrtho(false, BirdAndSpikes.WIDTH/2, BirdAndSpikes.HEIGHT/2);
+        cam.setToOrtho(false, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
         buttonTexture = new Texture("btn.png");
         backgroundTexture = new Texture("bg.png");
     }
