@@ -1,6 +1,7 @@
 package com.game.birdandspikes.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.game.birdandspikes.BirdAndSpikes;
 
 /**
  * Created by franek on 03.03.18.
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MenuState extends State {
     public MenuState(GameStateManager gsm) {
         super(gsm);
+        cam.setToOrtho(false, BirdAndSpikes.WIDTH/2, BirdAndSpikes.HEIGHT/2);
     }
 
     @Override
@@ -23,7 +25,7 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-
+        sb.setProjectionMatrix(cam.combined);
     }
 
     @Override
