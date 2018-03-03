@@ -1,5 +1,7 @@
 package com.game.birdandspikes.states;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.game.birdandspikes.BirdAndSpikes;
 
@@ -8,27 +10,43 @@ import com.game.birdandspikes.BirdAndSpikes;
  */
 
 public class MenuState extends State {
+    private Texture buttonTexture;
+    private Texture backgroundTexture;
+
     public MenuState(GameStateManager gsm) {
         super(gsm);
+<<<<<<< HEAD
         cam.setToOrtho(false, BirdAndSpikes.WIDTH/2, BirdAndSpikes.HEIGHT/2);
+=======
+        buttonTexture = new Texture("btn.png");
+        backgroundTexture = new Texture("bg.png");
+>>>>>>> create-menu-state
     }
 
     @Override
     public void handleInput() {
-
+        if(Gdx.input.justTouched()) gsm.set(new PlayState(gsm));
     }
 
     @Override
     public void update(float dt) {
-
+        handleInput();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+<<<<<<< HEAD
         sb.setProjectionMatrix(cam.combined);
+=======
+        sb.begin();
+        sb.draw(backgroundTexture, 0, 0, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
+        sb.draw(buttonTexture, (BirdAndSpikes.WIDTH / 2) - (buttonTexture.getWidth() / 2), (BirdAndSpikes.HEIGHT / 2) - (buttonTexture.getHeight() / 2));
+        sb.end();
+>>>>>>> create-menu-state
     }
 
     @Override
     public void dispose() {
+
     }
 }
