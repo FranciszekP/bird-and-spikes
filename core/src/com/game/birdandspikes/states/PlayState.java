@@ -10,12 +10,12 @@ import com.game.birdandspikes.BirdAndSpikes;
 
 public class PlayState extends State {
 
-    private Texture background;
+    private Texture backgroundTexture;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
-        background = new Texture("bg.png");
+        backgroundTexture = new Texture("bg.png");
     }
 
     @Override
@@ -32,7 +32,7 @@ public class PlayState extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(background, cam.position.x - (cam.viewportWidth/2), 0);
+        sb.draw(backgroundTexture, 0, 0, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
         sb.end();
 
     }
