@@ -49,6 +49,8 @@ Thumbs.db
 libgdx-*.zip
 libgdx-*.zip.MD5
 
+local.properties
+
 *.iml
 /.idea/
 
