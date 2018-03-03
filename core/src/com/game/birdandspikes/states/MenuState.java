@@ -15,12 +15,9 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-<<<<<<< HEAD
         cam.setToOrtho(false, BirdAndSpikes.WIDTH/2, BirdAndSpikes.HEIGHT/2);
-=======
         buttonTexture = new Texture("btn.png");
         backgroundTexture = new Texture("bg.png");
->>>>>>> create-menu-state
     }
 
     @Override
@@ -35,14 +32,11 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-<<<<<<< HEAD
         sb.setProjectionMatrix(cam.combined);
-=======
         sb.begin();
         sb.draw(backgroundTexture, 0, 0, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
         sb.draw(buttonTexture, (BirdAndSpikes.WIDTH / 2) - (buttonTexture.getWidth() / 2), (BirdAndSpikes.HEIGHT / 2) - (buttonTexture.getHeight() / 2));
         sb.end();
->>>>>>> create-menu-state
     }
 
     @Override
