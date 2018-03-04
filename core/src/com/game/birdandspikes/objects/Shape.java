@@ -1,5 +1,6 @@
 package com.game.birdandspikes.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 
@@ -8,8 +9,10 @@ import com.badlogic.gdx.math.Polygon;
  */
 
 public class Shape {
-    private float[] vertices;
-    private Polygon shape;
+    protected float[] vertices;
+    protected Polygon shape;
+    protected Texture texture;
+    protected int x, y;
 
     public Shape(float[] vertices) {
         this.vertices = vertices;

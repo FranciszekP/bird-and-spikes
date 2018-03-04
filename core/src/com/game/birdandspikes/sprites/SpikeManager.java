@@ -1,5 +1,6 @@
 package com.game.birdandspikes.sprites;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.game.birdandspikes.BirdAndSpikes;
 
@@ -43,7 +44,7 @@ public class SpikeManager {
 
     public void generateBottomSpikes() {
         for(int i = 0; i < VERTICAL_SPIKES_COUNT; i++) {
-            bottomSpikes.add(new BottomSpike(i * SPIKE_HEIGHT, MARGIN));
+            bottomSpikes.add(new BottomSpike(i * SPIKE_HEIGHT, 0));
         }
     }
 
@@ -63,27 +64,31 @@ public class SpikeManager {
         rightSpikes.clear();
         for(int i = 0; i < (VERTICAL_SPIKES_COUNT / 2); i++) {
             if(i != emptyRight) {
-                rightSpikes.add(new RightSpike(BirdAndSpikes.WIDTH, (i * 2) * SPIKE_HEIGHT + MARGIN));
-                rightSpikes.add(new RightSpike(BirdAndSpikes.WIDTH, (i * 2 + 1) * SPIKE_HEIGHT + MARGIN));
+                rightSpikes.add(new RightSpike(BirdAndSpikes.WIDTH - (SPIKE_HEIGHT / 2), (i * 2) * SPIKE_HEIGHT + MARGIN));
+                rightSpikes.add(new RightSpike(BirdAndSpikes.WIDTH - (SPIKE_HEIGHT / 2), (i * 2 + 1) * SPIKE_HEIGHT + MARGIN));
             }
         }
     }
 
-    public void draw(ShapeRenderer shapeRenderer) {
+    public void draw(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         for(TopSpike spike : topSpikes) {
-            spike.drawDebug(shapeRenderer);
+            //spike.drawDebug(shapeRenderer);
+            spike.draw(spriteBatch);
         }
 
         for(BottomSpike spike : bottomSpikes) {
-            spike.drawDebug(shapeRenderer);
+            //spike.drawDebug(shapeRenderer);
+            spike.draw(spriteBatch);
         }
 
         for(LeftSpike spike : leftSpikes) {
-            spike.drawDebug(shapeRenderer);
+            //spike.drawDebug(shapeRenderer);
+            spike.draw(spriteBatch);
         }
 
         for(RightSpike spike : rightSpikes) {
-            spike.drawDebug(shapeRenderer);
+            //spike.drawDebug(shapeRenderer);
+            spike.draw(spriteBatch);
         }
 
     }
