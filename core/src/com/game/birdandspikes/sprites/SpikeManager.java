@@ -2,6 +2,8 @@ package com.game.birdandspikes.sprites;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.game.birdandspikes.BirdAndSpikes;
 
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class SpikeManager {
 
     public void generateBottomSpikes() {
         for(int i = 0; i < VERTICAL_SPIKES_COUNT; i++) {
-            bottomSpikes.add(new BottomSpike(i * SPIKE_HEIGHT, 0));
+            bottomSpikes.add(new BottomSpike(i * SPIKE_HEIGHT, MARGIN));
         }
     }
 
@@ -91,5 +93,33 @@ public class SpikeManager {
             spike.draw(spriteBatch);
         }
 
+    }
+
+    public boolean checkForCollision(float[] vertices) {
+        for(TopSpike spike : topSpikes) {
+            if(spike.collides(vertices)) return true;
+        }
+
+        for(BottomSpike spike : bottomSpikes) {
+            if(spike.collides(vertices)) return true;
+        }
+
+        for(LeftSpike spike : leftSpikes) {
+            if(spike.collides(vertices)) return true;
+        }
+
+        for(RightSpike spike : rightSpikes) {
+            if(spike.collides(vertices)) return true;
+        }
+        return false;
+    }
+
+    public boolean checkForCollision(Rectangle rectangle) {
+        float[] vertices = new float[] { rectangle.getX(), rectangle.getY(),
+                                         rectangle.getX(), rectangle.getY() + rectangle.getHeight(),
+                                         rectangle.getX() + rectangle.getWidth(), rectangle.getY() + rectangle.getHeight(),
+                                         rectangle.getX() + rectangle.getWidth(), rectangle.getY() };
+        if(checkForCollision(vertices)) return true;
+        else return false;
     }
 }

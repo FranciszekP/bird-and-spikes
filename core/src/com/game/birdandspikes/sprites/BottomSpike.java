@@ -19,6 +19,6 @@ public class BottomSpike extends Shape {
     }
 
     public void draw(SpriteBatch spriteBatch) {
-        spriteBatch.draw(texture, x, y);
+        spriteBatch.draw(texture, x, y - SpikeManager.MARGIN);
     }
 }
