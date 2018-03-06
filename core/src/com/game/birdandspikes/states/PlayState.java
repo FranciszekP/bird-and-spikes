@@ -20,7 +20,6 @@ public class PlayState extends State {
 
     @Override
     protected void handleInput() {
-
     }
 
     @Override
