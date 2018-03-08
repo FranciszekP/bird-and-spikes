@@ -1,6 +1,7 @@
 package com.game.birdandspikes.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.game.birdandspikes.BirdAndSpikes;
@@ -21,7 +22,7 @@ public class Bird {
 
     private Rectangle bounds;
 
-    int directionStatus = 1;
+    private int directionStatus = 1;
 
     public Bird(int x, int y){
         position = new Vector3(x, y, 0);
@@ -55,6 +56,10 @@ public class Bird {
         return bounds;
     }
 
+    public void draw(SpriteBatch sb){
+        sb.draw(birdTexture, position.x, position.y);
+    }
+
     public void reverseFlyingDirection(){
         directionStatus *= -1;
     }
@@ -65,5 +70,9 @@ public class Bird {
 
     public Vector3 getPosition() {
         return position;
+    }
+
+    public int getDirectionStatus() {
+        return directionStatus;
     }
 }

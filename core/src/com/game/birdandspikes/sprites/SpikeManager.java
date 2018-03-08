@@ -95,6 +95,29 @@ public class SpikeManager {
 
     }
 
+    public void drawLeftSpikes(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch){
+        for(LeftSpike spike : leftSpikes) {
+            spike.draw(spriteBatch);
+        }
+    }
+
+    public void drawRightSpikes(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch){
+        for(RightSpike spike : rightSpikes) {
+            spike.draw(spriteBatch);
+        }
+    }
+
+    public void drawHorizontalSpikes(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch){
+        for(TopSpike spike : topSpikes) {
+            spike.draw(spriteBatch);
+        }
+
+        for(BottomSpike spike : bottomSpikes) {
+            spike.draw(spriteBatch);
+        }
+    }
+
+
     public boolean checkForCollision(float[] vertices) {
         for(TopSpike spike : topSpikes) {
             if(spike.collides(vertices)) return true;
