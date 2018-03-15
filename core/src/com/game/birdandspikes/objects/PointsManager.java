@@ -13,7 +13,7 @@ import com.game.birdandspikes.BirdAndSpikes;
  */
 
 public class PointsManager {
-    private int score = 10;
+    private int score = 0;
 
     private BitmapFont font;
     private GlyphLayout layout;
