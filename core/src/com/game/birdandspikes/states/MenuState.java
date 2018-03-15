@@ -13,16 +13,15 @@ public class MenuState extends State {
     private Texture buttonTexture;
     private Texture backgroundTexture;
 
-    public MenuState(GameStateManager gsm) {
-        super(gsm);
-        cam.setToOrtho(false, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
-        buttonTexture = new Texture("btn.png");
-        backgroundTexture = new Texture("bg.png");
+    public MenuState(GameStateManager gameStateManager) {
+        super(gameStateManager);
+        setOrthographicCameraWithDefaultScreenHeightAndWidth();
+        setButtonAndBackgroundTextures();
     }
 
-    @Override
-    public void handleInput() {
-        if(Gdx.input.justTouched()) gsm.set(new PlayState(gsm));
+    private void setButtonAndBackgroundTextures() {
+        buttonTexture = new Texture("btn.png");
+        backgroundTexture = new Texture("bg.png");
     }
 
     @Override
@@ -31,16 +30,37 @@ public class MenuState extends State {
     }
 
     @Override
-    public void render(SpriteBatch sb) {
-        sb.setProjectionMatrix(cam.combined);
-        sb.begin();
-        sb.draw(backgroundTexture, 0, 0, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
-        sb.draw(buttonTexture, (BirdAndSpikes.WIDTH / 2) - (buttonTexture.getWidth() / 2), (BirdAndSpikes.HEIGHT / 2) - (buttonTexture.getHeight() / 2));
-        sb.end();
+    public void handleInput() {
+        if(Gdx.input.justTouched())
+            setPlayState();
+    }
+
+    private void setPlayState(){
+        gameStateManager.set(new PlayState(gameStateManager));
+    }
+
+    @Override
+    public void render(SpriteBatch spriteBatch) {
+        spriteBatch.setProjectionMatrix(camera.combined);
+        spriteBatch.begin();
+
+        drawBackgroundTexture(spriteBatch);
+        drawButtonTexture(spriteBatch);
+
+        spriteBatch.end();
+    }
+
+    private void drawBackgroundTexture(SpriteBatch spriteBatch){
+        spriteBatch.draw(backgroundTexture, 0, 0, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
+    }
+
+    private void drawButtonTexture(SpriteBatch spriteBatch){
+        spriteBatch.draw(buttonTexture, (BirdAndSpikes.WIDTH / 2) - (buttonTexture.getWidth() / 2), (BirdAndSpikes.HEIGHT / 2) - (buttonTexture.getHeight() / 2));
     }
 
     @Override
     public void dispose() {
-
+        backgroundTexture.dispose();
+        buttonTexture.dispose();
     }
 }

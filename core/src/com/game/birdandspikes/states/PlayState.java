@@ -21,16 +21,63 @@ public class PlayState extends State {
     private Bird bird;
     private PointsManager pointsManager;
 
-    public PlayState(GameStateManager gsm) {
-        super(gsm);
-        cam.setToOrtho(false, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
-        backgroundTexture = new Texture("bg.png");
+    public PlayState(GameStateManager gameStateManager) {
+        super(gameStateManager);
+        setOrthographicCameraWithDefaultScreenHeightAndWidth();
+
+        setBackgroundTexture();
+
         spikeManager = new SpikeManager();
+        generateSpikes();
+
+        bird = new Bird(100, 200);
+
+        pointsManager = new PointsManager();
+    }
+
+    private void setBackgroundTexture(){
+        backgroundTexture = new Texture("bg.png");
+    }
+
+    private void generateSpikes(){
         spikeManager.generateBottomSpikes();
         spikeManager.generateTopSpikes();
-        bird = new Bird(100, 200);
         spikeManager.generateRightSpikes();
-        pointsManager = new PointsManager();
+    }
+
+    @Override
+    public void update(float dt) {
+        handleInput();
+        bird.update(dt);
+
+        if(bird.isTouchingRightSideOfTheScreen()){
+            bird.reverseFlyingDirection();
+            spikeManager.generateLeftSpikes();
+            pointsManager.increasePoints();
+            pointsManager.update();
+        }
+
+        if(bird.isTouchingLeftSideOfTheScreen()){
+            bird.reverseFlyingDirection();
+            spikeManager.generateRightSpikes();
+            pointsManager.increasePoints();
+            pointsManager.update();
+        }
+
+        if(isBirdCollidingWithSpikes()){
+            setNewPlayState();
+            pointsManager.increasePoints();
+            pointsManager.update();
+        }
+
+    }
+
+    private boolean isBirdCollidingWithSpikes(){
+        return spikeManager.checkForCollision(bird.getBounds());
+    }
+
+    private void setNewPlayState(){
+        gameStateManager.set(new PlayState(gameStateManager));
     }
 
     @Override
@@ -40,52 +87,31 @@ public class PlayState extends State {
     }
 
     @Override
-    public void update(float dt) {
-        handleInput();
-        bird.update(dt);
+    public void render(SpriteBatch spriteBatch) {
+        spriteBatch.setProjectionMatrix(camera.combined);
+        spriteBatch.begin();
 
-        if(bird.getPosition().x + bird.getBirdTexture().getWidth() >= BirdAndSpikes.WIDTH){
-            bird.reverseFlyingDirection();
-            spikeManager.generateLeftSpikes();
-            pointsManager.increasePoints();
-            pointsManager.update();
-        }
+        drawBackgroundTexture(spriteBatch);
 
-        if(bird.getPosition().x <= 0){
-            bird.reverseFlyingDirection();
-            spikeManager.generateRightSpikes();
-            pointsManager.increasePoints();
-            pointsManager.update();
-        }
+        if (bird.getDirectionStatus() == 1)
+           spikeManager.drawRightSpikes(shapeRenderer, spriteBatch);
+        else
+            spikeManager.drawLeftSpikes(shapeRenderer, spriteBatch);
 
-        if(spikeManager.checkForCollision(bird.getBounds())){
-            gsm.set(new PlayState(gsm));
-            pointsManager.increasePoints();
-            pointsManager.update();
-        }
+        spikeManager.drawHorizontalSpikes(shapeRenderer, spriteBatch);
+        pointsManager.draw(spriteBatch);
+        bird.draw(spriteBatch);
+
+        spriteBatch.end();
 
     }
 
-    @Override
-    public void render(SpriteBatch sb) {
-        sb.setProjectionMatrix(cam.combined);
-        sb.begin();
-        sb.draw(backgroundTexture, 0, 0, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
-
-        if (bird.getDirectionStatus() == 1)
-           spikeManager.drawRightSpikes(shapeRenderer, sb);
-        else
-            spikeManager.drawLeftSpikes(shapeRenderer, sb);
-
-        spikeManager.drawHorizontalSpikes(shapeRenderer, sb);
-        pointsManager.draw(sb);
-        bird.draw(sb);
-        sb.end();
-
+    private void drawBackgroundTexture(SpriteBatch spriteBatch){
+        spriteBatch.draw(backgroundTexture, 0, 0, BirdAndSpikes.WIDTH, BirdAndSpikes.HEIGHT);
     }
 
     @Override
     public void dispose() {
-
+        backgroundTexture.dispose();
     }
 }

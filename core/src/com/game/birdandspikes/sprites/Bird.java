@@ -28,23 +28,31 @@ public class Bird {
         position = new Vector3(x, y, 0);
         velocity = new Vector3(0, 0, 0);
         birdTexture = new Texture("bird.png");
-        bounds = new Rectangle(x, y, birdTexture.getWidth(), birdTexture.getHeight());
+        setBoundsForBird();
+    }
+
+    private void setBoundsForBird(){
+        bounds = new Rectangle(position.x, position.y, birdTexture.getWidth(), birdTexture.getHeight());
     }
 
     public void update(float dt) {
-
-        if (position.y > 0)
-            velocity.add(0, GRAVITY, 0);
+        velocity.add(0, GRAVITY, 0);
 
         velocity.scl(dt);
         position.add(directionStatus * MOVEMENT * dt, velocity.y, 0);
 
-        if (position.y < 0)
-            position.y = 0;
-
         velocity.scl(1/dt);
 
         bounds.setPosition(position.x, position.y);
+    }
+
+
+    public boolean isTouchingRightSideOfTheScreen(){
+        return position.x + birdTexture.getWidth() >= BirdAndSpikes.WIDTH;
+    }
+
+    public boolean isTouchingLeftSideOfTheScreen(){
+        return position.x <= 0;
 
     }
 
@@ -62,14 +70,6 @@ public class Bird {
 
     public void reverseFlyingDirection(){
         directionStatus *= -1;
-    }
-
-    public Texture getBirdTexture() {
-        return birdTexture;
-    }
-
-    public Vector3 getPosition() {
-        return position;
     }
 
     public int getDirectionStatus() {
