@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.game.birdandspikes.BirdAndSpikes;
+import com.game.birdandspikes.objects.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,11 +139,7 @@ public class SpikeManager {
     }
 
     public boolean checkForCollision(Rectangle rectangle) {
-        float[] vertices = new float[] { rectangle.getX(), rectangle.getY(),
-                                         rectangle.getX(), rectangle.getY() + rectangle.getHeight(),
-                                         rectangle.getX() + rectangle.getWidth(), rectangle.getY() + rectangle.getHeight(),
-                                         rectangle.getX() + rectangle.getWidth(), rectangle.getY() };
-        if(checkForCollision(vertices)) return true;
+        if(checkForCollision(Shape.turnIntoVertices(rectangle))) return true;
         else return false;
     }
 }
