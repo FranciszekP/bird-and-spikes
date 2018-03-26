@@ -1,6 +1,7 @@
 package com.game.birdandspikes.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -33,6 +34,8 @@ public class PlayState extends State {
         bird = new Bird(100, 200);
 
         pointsManager = new PointsManager();
+
+        shapeRenderer = new ShapeRenderer();
     }
 
     private void setBackgroundTexture(){
@@ -90,6 +93,8 @@ public class PlayState extends State {
     public void render(SpriteBatch spriteBatch) {
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.BLACK);
 
         drawBackgroundTexture(spriteBatch);
 
@@ -102,6 +107,7 @@ public class PlayState extends State {
         pointsManager.draw(spriteBatch);
         bird.draw(spriteBatch);
 
+        shapeRenderer.end();
         spriteBatch.end();
 
     }

@@ -18,8 +18,9 @@ import java.util.Random;
 public class SpikeManager {
     public static final int SPIKE_HEIGHT = 40;
     public static final int MARGIN = 40;
-    public static final int VERTICAL_SPIKES_COUNT = 16;
+    public static final int VERTICAL_SPIKES_COUNT = 12;
     public static final int HORIZONTAL_SPIKES_COUNT = 12;
+    public static final int FREE_SPACE = 2 * SPIKE_HEIGHT;
 
     private List<LeftSpike> leftSpikes;
     private List<RightSpike> rightSpikes;
@@ -41,7 +42,7 @@ public class SpikeManager {
 
     public void generateTopSpikes() {
         for(int i = 0; i < VERTICAL_SPIKES_COUNT; i++) {
-            topSpikes.add(new TopSpike(i * SPIKE_HEIGHT, VERTICAL_SPIKES_COUNT * SPIKE_HEIGHT + (SPIKE_HEIGHT / 2)));
+            topSpikes.add(new TopSpike(i * SPIKE_HEIGHT, VERTICAL_SPIKES_COUNT * SPIKE_HEIGHT + (SPIKE_HEIGHT / 2) + (2 * FREE_SPACE)));
         }
     }
 
@@ -56,8 +57,8 @@ public class SpikeManager {
         leftSpikes.clear();
         for(int i = 0; i < VERTICAL_SPIKES_COUNT / 2; i++) {
             if(i != emptyLeft) {
-                leftSpikes.add(new LeftSpike(0, (i * 2) * SPIKE_HEIGHT + MARGIN));
-                leftSpikes.add(new LeftSpike(0, (i * 2 + 1) * SPIKE_HEIGHT + MARGIN));
+                leftSpikes.add(new LeftSpike(0, (i * 2) * SPIKE_HEIGHT + MARGIN + FREE_SPACE));
+                leftSpikes.add(new LeftSpike(0, (i * 2 + 1) * SPIKE_HEIGHT + MARGIN + FREE_SPACE));
             }
         }
     }
@@ -67,8 +68,8 @@ public class SpikeManager {
         rightSpikes.clear();
         for(int i = 0; i < (VERTICAL_SPIKES_COUNT / 2); i++) {
             if(i != emptyRight) {
-                rightSpikes.add(new RightSpike(BirdAndSpikes.WIDTH - (SPIKE_HEIGHT / 2), (i * 2) * SPIKE_HEIGHT + MARGIN));
-                rightSpikes.add(new RightSpike(BirdAndSpikes.WIDTH - (SPIKE_HEIGHT / 2), (i * 2 + 1) * SPIKE_HEIGHT + MARGIN));
+                rightSpikes.add(new RightSpike(BirdAndSpikes.WIDTH - (SPIKE_HEIGHT / 2), (i * 2) * SPIKE_HEIGHT + MARGIN + FREE_SPACE));
+                rightSpikes.add(new RightSpike(BirdAndSpikes.WIDTH - (SPIKE_HEIGHT / 2), (i * 2 + 1) * SPIKE_HEIGHT + MARGIN + FREE_SPACE));
             }
         }
     }
@@ -99,22 +100,26 @@ public class SpikeManager {
     public void drawLeftSpikes(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch){
         for(LeftSpike spike : leftSpikes) {
             spike.draw(spriteBatch);
+            //spike.drawDebug(shapeRenderer);
         }
     }
 
     public void drawRightSpikes(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch){
         for(RightSpike spike : rightSpikes) {
             spike.draw(spriteBatch);
+            //spike.drawDebug(shapeRenderer);
         }
     }
 
     public void drawHorizontalSpikes(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch){
         for(TopSpike spike : topSpikes) {
             spike.draw(spriteBatch);
+            //spike.drawDebug(shapeRenderer);
         }
 
         for(BottomSpike spike : bottomSpikes) {
             spike.draw(spriteBatch);
+            //spike.drawDebug(shapeRenderer);
         }
     }
 
