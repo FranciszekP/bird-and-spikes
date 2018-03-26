@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
  * Created by przemyslawwidera on 03.03.2018.
  */
 
-public class Shape {
+public class Shape extends Polygon{
     protected final static float SIN_22_5 = 0.383f;
     protected final static float COS_22_5 = 0.924f;
     protected final static float SQRT_2 = 1.414f;
@@ -36,7 +36,14 @@ public class Shape {
         for(int i = 0; i < vertices.length; i += 2) {
             if(shape.contains(vertices[i], vertices[i + 1])) return true;
         }
+
         return false;
+    }
+
+    public boolean collides(Shape shape) {
+        if(collides(shape.getVertices())) return true;
+        else if(shape.collides(vertices)) return true;
+        else return false;
     }
 
     public float[] getVertices() {
@@ -75,5 +82,9 @@ public class Shape {
                              rectangle.getX(), rectangle.getY() + rectangle.getHeight(),
                              rectangle.getX() + rectangle.getWidth(), rectangle.getY() + rectangle.getHeight(),
                              rectangle.getX() + rectangle.getWidth(), rectangle.getY() };
+    }
+
+    public void update() {
+        shape.setVertices(vertices);
     }
 }
